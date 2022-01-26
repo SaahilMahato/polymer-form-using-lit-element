@@ -7,6 +7,13 @@ export class AppComponent extends LitElement {
         width: 100%;
         height: 100%;
       }
+
+      .container img {
+        width: 96px;
+        margin: 25px;
+        margin-bottom: 0;
+        cursor: pointer;
+      }
     `;
   }
 
@@ -25,6 +32,7 @@ export class AppComponent extends LitElement {
   render() {
     return html`
       <div class="container">
+        <img src="./images/add.png" alt="show form" @click=${this.showForm}>
         <form-component .addToData=${this.addToData}></form-component>
       </div>
     `;
@@ -34,6 +42,8 @@ export class AppComponent extends LitElement {
     this.data = [...this.data, receivedData];
     console.log(this.data);
   }
+
+  showForm = () => this.shadowRoot.querySelector("form-component").style.display = "block";
 }
 
 customElements.define('app-component', AppComponent);

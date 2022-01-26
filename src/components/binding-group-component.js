@@ -7,7 +7,7 @@ export class BindingGroupComponent extends LitElement {
     static get styles() {
         return css`
             .greyBackground {
-                background-color: lightgray;
+                background-color: #F5F5F5;
             }
 
             .group {

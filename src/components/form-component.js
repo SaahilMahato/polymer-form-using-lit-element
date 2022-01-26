@@ -14,6 +14,7 @@ export class FormComponent extends LitElement {
                 padding: 2% 2%;
                 background-color: white;
                 margin: 0 auto;
+                border-radius: 20px;
             }
 
             .form-header {
@@ -65,7 +66,7 @@ export class FormComponent extends LitElement {
             }
 
             .create-button {
-                background-color: red;
+                background-color: #E91E62;
                 color: white;
                 border-radius: 5px;
                 font-weight: bold;
@@ -74,7 +75,7 @@ export class FormComponent extends LitElement {
             }
 
             .cancel-button {
-                color: grey;
+                color: #616161;
                 font-weight: bold;
                 margin: 0;
                 margin-left: 5px;
@@ -128,18 +129,47 @@ export class FormComponent extends LitElement {
             <div class="form">
                 <div class="form-header">
                     <p>Create Binding Group</p>
-                    <img src="./images/cross.png" alt="cross-icon">
+                    <img src="./images/cross.png" alt="cross-icon" @click=${this.hideForm}>
                 </div>
                 <div class="form-row">
-                    <paper-input label="Name" @keyup=${this.updateName}></paper-input>
-                    <paper-input label="Ligands Promoted" @keyup=${this.updateLigandsPromoted}></paper-input>
+                    <paper-input 
+                        label="Name" 
+                        @keyup=${this.updateName}
+                        required 
+                        auto-validate
+                        error-message="Please enter a name"
+                        ></paper-input>
+                    <paper-input 
+                        label="Ligands Promoted" 
+                        @keyup=${this.updateLigandsPromoted}
+                        required 
+                        auto-validate
+                        pattern="[0-9]*"
+                        error-message="Please enter number of ligands promoted"
+                    ></paper-input>
                 </div>
                 <div class="form-row">
-                    <paper-input label="Description" @keyup=${this.updateDescription}></paper-input>
-                    <paper-input label="Total Ligands in Binding Group" @keyup=${this.updateTotalLigands}></paper-input>
+                    <paper-input 
+                        label="Description" 
+                        @keyup=${this.updateDescription}
+                        required 
+                        auto-validate
+                        error-message="Please enter description"
+                    ></paper-input>
+                    <paper-input 
+                        label="Total Ligands in Binding Group" 
+                        @keyup=${this.updateTotalLigands}
+                        required 
+                        auto-validate
+                        pattern="[0-9]*"
+                        error-message="Please enter number of total ligands"
+                    ></paper-input>
                 </div>
                 <div class="form-row">
-                    <vaadin-date-picker label="Date" value="2022-01-26" @change=${this.updateDate}></vaadin-date-picker>
+                    <vaadin-date-picker 
+                        label="Date" 
+                        @change=${this.updateDate}
+                    ></vaadin-date-picker>
                 </div>
                 <div class="binding-group-row">
                     <p>Binding Group</p>
@@ -155,11 +185,14 @@ export class FormComponent extends LitElement {
                     </div>
                 </div>
                 <div class="form-row">
-                    <vaadin-text-area label="Comments" @keyup=${this.updateComments}></vaadin-text-area>
+                    <vaadin-text-area 
+                        label="Comments" 
+                        @keyup=${this.updateComments}
+                    ></vaadin-text-area>
                 </div>
                 <div class="form-footer">
                     <paper-button class="create-button" raised @click=${() => this.addToData(this.inputData)}>CREATE</paper-button>
-                    <paper-button class="cancel-button">CANCEL</paper-button>
+                    <paper-button class="cancel-button" @click=${this.hideForm}>CANCEL</paper-button>
                 </div>
             </div>
         `;
@@ -181,7 +214,7 @@ export class FormComponent extends LitElement {
 
     deleteBindingGroup = groupToDelete => this.inputData.bindingGroups = this.inputData.bindingGroups.filter(group => group !== groupToDelete);
 
-
+    hideForm = () => this.style.display = "none";
 }
 
 customElements.define("form-component", FormComponent);
