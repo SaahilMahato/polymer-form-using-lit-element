@@ -262,9 +262,7 @@ export class FormComponent extends LitElement {
         this.shadowRoot.querySelector("#description").validate() &&
         this.shadowRoot.querySelector("#totalLigands").validate() &&
         this.shadowRoot.querySelector("#date").validate() &&
-        this.inputData.bindingGroups.length > 0 &&
-        this.shadowRoot.querySelector("#comments").validate() &&
-        this.shadowRoot.querySelector("#date").validate())
+        this.inputData.bindingGroups.length > 0)
             this.addToData({...this.inputData});
         else {
             alert("Error in validation");
