@@ -4,6 +4,7 @@ import "@polymer/paper-input/paper-input.js";
 import "@vaadin/date-picker";
 import "@polymer/paper-button/paper-button.js";
 import "@vaadin/text-area";
+import "@polymer/paper-dialog";
 
 export class FormComponent extends LitElement {
     static get styles() {
@@ -11,10 +12,10 @@ export class FormComponent extends LitElement {
 
             .form {
                 width: 30%;
-                padding: 2% 2%;
+                padding: 0.5%;
                 background-color: white;
                 margin: 0 auto;
-                border-radius: 20px;
+                border-radius: 10px;
             }
 
             .form-header {
@@ -45,7 +46,6 @@ export class FormComponent extends LitElement {
 
             vaadin-date-picker, vaadin-text-area {
                 width: 100%;
-                background-color: white;
             }
 
             .binding-group-row p {
@@ -121,6 +121,7 @@ export class FormComponent extends LitElement {
     static get properties() {
         return {
             addToData: { type: Function },
+            hideForm: { type: Function },
         };
     }
 
@@ -151,6 +152,7 @@ export class FormComponent extends LitElement {
         };
 
         this.addToData = () => {};
+        this.hideForm = () => {};
     }
 
     /**
@@ -160,7 +162,7 @@ export class FormComponent extends LitElement {
      */
     render() {
         return html`
-            <div class="form">
+        <paper-dialog class="form">
                 <div class="form-header">
                     <p>Create Binding Group</p>
                     <img src="./images/cross.png" alt="cross-icon" @click=${this.hideForm}>
@@ -228,7 +230,7 @@ export class FormComponent extends LitElement {
                     <paper-button class="create-button" raised @click=${() => this.addToData(this.inputData)}>CREATE</paper-button>
                     <paper-button class="cancel-button" @click=${this.hideForm}>CANCEL</paper-button>
                 </div>
-            </div>
+        </paper-dialog>
         `;
     }
 
@@ -247,8 +249,6 @@ export class FormComponent extends LitElement {
     addBindingGroup = groupToAdd => this.inputData.bindingGroups.push(groupToAdd);
 
     deleteBindingGroup = groupToDelete => this.inputData.bindingGroups = this.inputData.bindingGroups.filter(group => group !== groupToDelete);
-
-    hideForm = () => this.style.display = "none";
 }
 
 customElements.define("form-component", FormComponent);
