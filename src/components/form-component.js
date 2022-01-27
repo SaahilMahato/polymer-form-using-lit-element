@@ -162,13 +162,14 @@ export class FormComponent extends LitElement {
      */
     render() {
         return html`
-        <paper-dialog class="form">
+            <paper-dialog class="form">
                 <div class="form-header">
                     <p>Create Binding Group</p>
                     <img src="./images/cross.png" alt="cross-icon" @click=${this.hideForm}>
                 </div>
                 <div class="form-row">
                     <paper-input 
+                        id="name"
                         label="Name" 
                         @keyup=${this.updateName}
                         required 
@@ -176,6 +177,7 @@ export class FormComponent extends LitElement {
                         error-message="Please enter a name"
                         ></paper-input>
                     <paper-input 
+                        id="ligandsPromoted"
                         label="Ligands Promoted" 
                         @keyup=${this.updateLigandsPromoted}
                         required 
@@ -186,6 +188,7 @@ export class FormComponent extends LitElement {
                 </div>
                 <div class="form-row">
                     <paper-input 
+                        id="description"
                         label="Description" 
                         @keyup=${this.updateDescription}
                         required 
@@ -193,6 +196,7 @@ export class FormComponent extends LitElement {
                         error-message="Please enter description"
                     ></paper-input>
                     <paper-input 
+                        id="totalLigands"
                         label="Total Ligands in Binding Group" 
                         @keyup=${this.updateTotalLigands}
                         required 
@@ -203,8 +207,10 @@ export class FormComponent extends LitElement {
                 </div>
                 <div class="form-row">
                     <vaadin-date-picker 
+                        id="date"
                         label="Date" 
                         @change=${this.updateDate}
+                        required
                     ></vaadin-date-picker>
                 </div>
                 <div class="binding-group-row">
@@ -227,10 +233,10 @@ export class FormComponent extends LitElement {
                     ></vaadin-text-area>
                 </div>
                 <div class="form-footer">
-                    <paper-button class="create-button" raised @click=${() => this.addToData(this.inputData)}>CREATE</paper-button>
+                    <paper-button class="create-button" raised @click=${this.create}>CREATE</paper-button>
                     <paper-button class="cancel-button" @click=${this.hideForm}>CANCEL</paper-button>
                 </div>
-        </paper-dialog>
+            </paper-dialog>
         `;
     }
 
@@ -249,6 +255,21 @@ export class FormComponent extends LitElement {
     addBindingGroup = groupToAdd => this.inputData.bindingGroups.push(groupToAdd);
 
     deleteBindingGroup = groupToDelete => this.inputData.bindingGroups = this.inputData.bindingGroups.filter(group => group !== groupToDelete);
+    
+    create = () => {
+        if (this.shadowRoot.querySelector("#name").validate() &&
+        this.shadowRoot.querySelector("#ligandsPromoted").validate() &&
+        this.shadowRoot.querySelector("#description").validate() &&
+        this.shadowRoot.querySelector("#totalLigands").validate() &&
+        this.shadowRoot.querySelector("#date").validate() &&
+        this.inputData.bindingGroups.length > 0 &&
+        this.shadowRoot.querySelector("#comments").validate() &&
+        this.shadowRoot.querySelector("#date").validate())
+            this.addToData({...this.inputData});
+        else {
+            alert("Error in validation");
+        }
+    }
 }
 
 customElements.define("form-component", FormComponent);
